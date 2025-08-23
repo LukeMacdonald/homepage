@@ -1,4 +1,5 @@
 import docker
+from docker.errors import DockerException
 
 
 class Docker:
@@ -7,7 +8,10 @@ class Docker:
     """
 
     def __init__(self):
-        self._client = docker.from_env()
+        if self.is_docker_running():
+            self._client = docker.from_env()
+        else:
+            self._client = None
 
     def get_images(self):
         """
@@ -54,3 +58,13 @@ class Docker:
         Function to return data usage information of docker on host
         """
         return self._client.df()
+
+    def is_docker_running(self):
+        try:
+            docker.from_env(timeout=3)
+            return True
+        except DockerException:
+            return False
+
+    def check_docker(self):
+        return self._client is not None

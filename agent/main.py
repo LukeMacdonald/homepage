@@ -1,26 +1,25 @@
-import os
-import sys
-from typing import Union
-
 from fastapi import FastAPI
 from vm import Virtual_Machine
 
 app = FastAPI()
 
-vm = Virtual_Machine()
-
 
 @app.get("/")
 def read_root():
-    return {
+    vm = Virtual_Machine()
+    payload = {
         "Host": vm.name,
         "CPU": vm.get_cpu(),
         "RAM": vm.get_ram(),
         "Disk": vm.get_disk_usage(),
-        "Docker": vm.get_docker_info(),
+        "Nginx": vm.get_nginx_info(),
+        "Services Running": {
+            "Kubernetes": vm.is_kubernetes_running(),
+            "Docker": vm.is_docker_running(),
+            "Apache": vm.is_apache_running(),
+            "Nginx": vm.is_nginx_running(),
+        },
     }
-
-
-@app.get("/cpu")
-def read_cpu():
-    return {"CPU Usage (%)": vm.get_cpu()}
+    if vm.is_docker_running():
+        payload["Docker"] = vm.get_docker_info()
+    return payload
