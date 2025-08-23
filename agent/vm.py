@@ -5,6 +5,7 @@ import subprocess
 
 import psutil
 from models.docker import Docker
+from models.kubernetes import get_all
 from models.nginx import Nginx
 from pydantic import BaseModel
 
@@ -66,6 +67,9 @@ class Virtual_Machine(BaseModel):
 
     def get_nginx_info(self):
         return self._nginx.extract_sites()
+
+    def get_kube_info(self):
+        return get_all()
 
     def check_command_exists(self, cmd):
         """Check if a command exists on the system."""

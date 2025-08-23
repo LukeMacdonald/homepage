@@ -22,4 +22,6 @@ def read_root():
     }
     if vm.is_docker_running():
         payload["Docker"] = vm.get_docker_info()
+    if vm.is_kubernetes_running():
+        payload["Kubernetes"] = vm.get_kube_info()
     return payload

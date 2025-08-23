@@ -46,4 +46,4 @@ def get_all():
     resources = {}
     for ns in namespaces.items:
         resources[ns.metadata.name] = get_resources(ns.metadata.name)
-    print(resources)
+    return resources
