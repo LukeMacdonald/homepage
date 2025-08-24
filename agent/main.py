@@ -13,6 +13,7 @@ def read_root():
         "RAM": vm.get_ram(),
         "Disk": vm.get_disk_usage(),
         "Nginx": vm.get_nginx_info(),
+        "SSL": vm.get_ssl_info(),
         "Services Running": {
             "Kubernetes": vm.is_kubernetes_running(),
             "Docker": vm.is_docker_running(),

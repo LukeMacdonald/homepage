@@ -7,6 +7,7 @@ import psutil
 from models.docker import Docker
 from models.kubernetes import get_all
 from models.nginx import Nginx
+from models.ssl import get_cert_details
 from pydantic import BaseModel
 
 
@@ -70,6 +71,9 @@ class Virtual_Machine(BaseModel):
 
     def get_kube_info(self):
         return get_all()
+
+    def get_ssl_info(self):
+        return get_cert_details()
 
     def check_command_exists(self, cmd):
         """Check if a command exists on the system."""
